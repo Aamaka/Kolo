@@ -1,2 +1,4 @@
-package africa.semicolon.dto.responses;public class WithdrawResponse {
+package africa.semicolon.dto.responses;
+
+public class WithdrawResponse {
 }

@@ -1,2 +1,4 @@
-package africa.semicolon.dto.responses;public class DepositResponse {
+package africa.semicolon.dto.responses;
+
+public class DepositResponse {
 }

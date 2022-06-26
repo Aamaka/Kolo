@@ -1,2 +1,4 @@
-package africa.semicolon.dto.requests;public class CheckBalanceRequest {
+package africa.semicolon.dto.requests;
+
+public class CheckBalanceRequest {
 }

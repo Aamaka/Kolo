@@ -1,2 +1,4 @@
-package africa.semicolon.dto.requests;public class WithdrawRequest {
+package africa.semicolon.dto.requests;
+
+public class WithdrawRequest {
 }
