@@ -22,6 +22,7 @@ public class BankUsersServiceImpl implements BankUsersService{
         users.setAddress(request.getAddress());
         users.setPhoneNumber(request.getPhoneNumber());
         users.setOccupation(request.getOccupation());
+        users.setPassword(request.getPassword());
 
         BankUsers saved = bankUserRepository.save(users);
 
@@ -29,13 +30,20 @@ public class BankUsersServiceImpl implements BankUsersService{
 
         registerResponse.setMessage(saved.getFirstName()+
                 "'s Registration Successful !!!");
-        registerResponse.setAccountNumber("your account number");
+        registerResponse.setAccountNumber("Your account number is ...");
         return registerResponse;
     }
 
     @Override
     public LoginResponse login(LoginRequest request) {
-        return null;
+        BankUsers user = bankUserRepository.findByEmail(request.getEmail());
+        if(user.getEmail().equals(request.getEmail())) {
+            if (user.getPassword().equals(request.getPassword())) {
+                LoginResponse response = new LoginResponse();
+                response.setMessage("Welcome back " + user.getFirstName() + " " + user.getLastName());
+            }
+        }
+        throw  new NullPointerException("Account not found");
     }
 
     @Override

@@ -1,7 +1,9 @@
 package africa.semicolon.controller;
 
 import africa.semicolon.data.models.BankUsers;
+import africa.semicolon.dto.requests.LoginRequest;
 import africa.semicolon.dto.requests.RegisterRequest;
+import africa.semicolon.dto.responses.LoginResponse;
 import africa.semicolon.dto.responses.RegisterResponse;
 import africa.semicolon.service.BankUsersService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,10 @@ public class BankUserController {
     @PostMapping("/user/register")
     public RegisterResponse register (@RequestBody RegisterRequest request){
         return usersService.register(request);
+    }
 
+    @PostMapping("/user/login")
+    public LoginResponse login(LoginRequest request){
+        return usersService.login(request);
     }
 }
