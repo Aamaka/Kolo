@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.math.BigInteger;
+
 @Data
 @RequiredArgsConstructor
 @NoArgsConstructor
@@ -37,6 +39,9 @@ public class BankUsers {
     @Id
     private String id;
 
+    @NonNull
     private String password;
+
+    private BigInteger balance;
 
 }

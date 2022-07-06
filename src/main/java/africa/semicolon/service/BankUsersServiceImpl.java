@@ -7,6 +7,8 @@ import africa.semicolon.dto.responses.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class BankUsersServiceImpl implements BankUsersService{
 
@@ -36,18 +38,21 @@ public class BankUsersServiceImpl implements BankUsersService{
 
     @Override
     public LoginResponse login(LoginRequest request) {
-        BankUsers user = bankUserRepository.findByEmail(request.getEmail());
-        if(user.getEmail().equals(request.getEmail())) {
-            if (user.getPassword().equals(request.getPassword())) {
-                LoginResponse response = new LoginResponse();
-                response.setMessage("Welcome back " + user.getFirstName() + " " + user.getLastName());
+        Optional<BankUsers> user = bankUserRepository.findByEmail(request.getEmail());
+            if(user.isPresent()) {
+                if (user.get().getPassword().equals(request.getPassword())) {
+                    LoginResponse response = new LoginResponse();
+                    response.setMessage("Welcome back " + user.get().getFirstName() + " " + user.get().getLastName());
+                    return response;
+                }
+
             }
-        }
-        throw  new NullPointerException("Account not found");
+        throw  new NullPointerException("Account does not exist");
     }
 
     @Override
     public DepositResponse deposit(DepositRequest request) {
+
         return null;
     }
 

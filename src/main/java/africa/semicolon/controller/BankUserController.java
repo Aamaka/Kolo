@@ -1,6 +1,4 @@
 package africa.semicolon.controller;
-
-import africa.semicolon.data.models.BankUsers;
 import africa.semicolon.dto.requests.LoginRequest;
 import africa.semicolon.dto.requests.RegisterRequest;
 import africa.semicolon.dto.responses.LoginResponse;
@@ -24,7 +22,7 @@ public class BankUserController {
     }
 
     @PostMapping("/user/login")
-    public LoginResponse login(LoginRequest request){
+    public LoginResponse login(@RequestBody LoginRequest request){
         return usersService.login(request);
     }
 }
