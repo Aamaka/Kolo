@@ -52,8 +52,11 @@ public class BankUsersServiceImpl implements BankUsersService{
 
     @Override
     public DepositResponse deposit(DepositRequest request) {
+        Optional<BankUsers> users = bankUserRepository.findByEmail(request.getEmail());
+        if(users.isPresent()){
 
-        return null;
+        }
+
     }
 
     @Override

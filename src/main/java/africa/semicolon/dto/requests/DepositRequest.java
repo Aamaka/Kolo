@@ -14,4 +14,5 @@ public class DepositRequest {
     private String lastName;
     private BigDecimal amount;
     private String accountNumber;
+    private String email;
 }
