@@ -9,6 +9,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.math.BigInteger;
+import java.time.LocalDateTime;
 
 @Data
 @RequiredArgsConstructor
@@ -42,6 +43,8 @@ public class BankUsers {
     @NonNull
     private String password;
 
-    private BigInteger balance;
+    private int balance;
+
+    private LocalDateTime time = LocalDateTime.now();
 
 }

@@ -10,6 +10,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DepositResponse {
-    private String deposit;
+    private String message;
     private LocalDateTime date = LocalDateTime.now();
 }
