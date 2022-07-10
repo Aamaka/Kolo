@@ -90,6 +90,17 @@ public class BankUsersServiceImpl implements BankUsersService{
 
     @Override
     public WithdrawResponse withdraw(WithdrawRequest request) {
+        Optional<BankUser> user = bankUserRepository.findByAccountNumber(request.getAccountNumber());
+        if (user.isPresent()){
+            if (user.get().getPassword().equals(request.getPassword())){
+                if (request.getAmount() > 0 && request.getAmount() <= user.get().getBalance()){
+                    user.get().setBalance(user.get().getBalance() - request.getAmount());
+                }else {
+
+                }
+            }
+        }
+
         return null;
     }
 
