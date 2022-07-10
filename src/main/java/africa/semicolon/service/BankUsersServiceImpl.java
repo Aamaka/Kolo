@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class BankUsersServiceImpl implements BankUsersService{
@@ -26,13 +27,18 @@ public class BankUsersServiceImpl implements BankUsersService{
         users.setOccupation(request.getOccupation());
         users.setPassword(request.getPassword());
 
+        String accountNumber = String.valueOf(UUID.randomUUID().getMostSignificantBits());
+        accountNumber = accountNumber.substring(1, 10);
+        users.setAccountNumber(accountNumber);
         BankUser saved = bankUserRepository.save(users);
 
         RegisterResponse registerResponse = new RegisterResponse();
 
         registerResponse.setMessage(saved.getFirstName()+
                 "'s Registration Successful !!!");
-        registerResponse.setAccountNumber("Your account number is " + users.getAccountNumber());
+
+
+        registerResponse.setAccountNumber("Your account number is " + saved.getAccountNumber());
         return registerResponse;
     }
 
