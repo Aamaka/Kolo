@@ -29,7 +29,7 @@ public class BankUsersServiceImpl implements BankUsersService{
         users.setPassword(request.getPassword());
 
         String accountNumber = String.valueOf(UUID.randomUUID().getMostSignificantBits());
-        accountNumber = accountNumber.substring(1, 10);
+        accountNumber = accountNumber.substring(1, 11);
 
         users.setAccountNumber(accountNumber);
 
@@ -70,8 +70,6 @@ public class BankUsersServiceImpl implements BankUsersService{
 
                 response.setMessage(users.get().getFirstName() + " "+ request.getAmount()+" was deposited to your account,  your balance is "+
                         users.get().getBalance());
-//                response.setDate(LocalDateTime.parse(DateTimeFormatter.ofPattern("EEEE, dd/MM/ yyyy,  hh:mm, a").
-//                        format(users.get().getTime())));
 
                 response.setBalance(users.get().getBalance() + response.getBalance());
                 bankUserRepository.save(users.get());
@@ -82,7 +80,7 @@ public class BankUsersServiceImpl implements BankUsersService{
             }
 
         }
-        throw new IllegalArgumentException("email does not exist");
+        throw new IllegalArgumentException("Account does not exist");
     }
 
     @Override
