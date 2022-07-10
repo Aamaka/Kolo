@@ -5,6 +5,8 @@ import africa.semicolon.data.repositories.BankUserRepository;
 import africa.semicolon.dto.requests.*;
 import africa.semicolon.dto.responses.*;
 import africa.semicolon.exceptions.AccountException;
+import africa.semicolon.exceptions.InvalidAmountException;
+import africa.semicolon.exceptions.InvalidDetailsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -77,7 +79,7 @@ public class BankUsersServiceImpl implements BankUsersService{
 
                 return response;
             }else {
-                throw new IllegalArgumentException("Invalid amount");
+                throw new InvalidAmountException("Invalid amount");
             }
 
         }
@@ -97,12 +99,19 @@ public class BankUsersServiceImpl implements BankUsersService{
                 if (request.getAmount() > 0 && request.getAmount() <= user.get().getBalance()){
                     user.get().setBalance(user.get().getBalance() - request.getAmount());
                 }else {
-
+                    throw new InvalidAmountException("invalid amount");
                 }
+
+            }else {
+                throw new InvalidDetailsException("invalid details");
             }
+            WithdrawResponse response = new WithdrawResponse();
+            response.setMessage("Txn : Debit" + "\n" + "amount : "+ request.getAmount());
+            response.setAccountBalance(user.get().getBalance());
+            return response;
         }
 
-        return null;
+        throw new AccountException("Account does not exist");
     }
 
     @Override
