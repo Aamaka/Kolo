@@ -4,6 +4,7 @@ import africa.semicolon.data.models.BankUser;
 import africa.semicolon.data.repositories.BankUserRepository;
 import africa.semicolon.dto.requests.*;
 import africa.semicolon.dto.responses.*;
+import africa.semicolon.exceptions.AccountException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +19,7 @@ public class BankUsersServiceImpl implements BankUsersService{
 
     @Override
     public RegisterResponse register(RegisterRequest request) {
-        if(bankUserRepository.existsByEmail(request.getEmail()))throw new IllegalArgumentException("Account already exist");
+        if(bankUserRepository.existsByEmail(request.getEmail()))throw new AccountException("Account already exist");
         BankUser users = new BankUser();
         users.setFirstName(request.getFirstName());
         users.setLastName(request.getLastName());
@@ -57,7 +58,7 @@ public class BankUsersServiceImpl implements BankUsersService{
                 }
 
             }
-        throw  new NullPointerException("Account does not exist");
+        throw  new AccountException("Account does not exist");
     }
 
     @Override
@@ -80,7 +81,7 @@ public class BankUsersServiceImpl implements BankUsersService{
             }
 
         }
-        throw new IllegalArgumentException("Account does not exist");
+        throw new AccountException("Account does not exist");
     }
 
     @Override
