@@ -18,6 +18,7 @@ public class BankUsersServiceImpl implements BankUsersService{
 
     @Override
     public RegisterResponse register(RegisterRequest request) {
+        if(bankUserRepository.existsByEmail(request.getEmail()))throw new IllegalArgumentException("Account already exist");
         BankUser users = new BankUser();
         users.setFirstName(request.getFirstName());
         users.setLastName(request.getLastName());
@@ -50,7 +51,8 @@ public class BankUsersServiceImpl implements BankUsersService{
             if(user.isPresent()) {
                 if (user.get().getPassword().equals(request.getPassword())) {
                     LoginResponse response = new LoginResponse();
-                    response.setMessage("Welcome back " + user.get().getFirstName() + " " + user.get().getLastName());
+                    response.setMessage("Welcome back " + user.get().getFirstName() + " " + user.get().getLastName()
+                            +" "+"your balance is " + user.get().getBalance());
                     return response;
                 }
 
