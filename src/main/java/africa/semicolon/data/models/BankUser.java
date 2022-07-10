@@ -34,7 +34,7 @@ public class BankUser {
     @NonNull
     private String occupation;
 
-    private String AccountNumber;
+    private String accountNumber = new AccountNumber().toString();
 
     @Id
     private String id;

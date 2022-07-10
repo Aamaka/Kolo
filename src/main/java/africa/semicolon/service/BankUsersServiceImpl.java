@@ -32,7 +32,7 @@ public class BankUsersServiceImpl implements BankUsersService{
 
         registerResponse.setMessage(saved.getFirstName()+
                 "'s Registration Successful !!!");
-        registerResponse.setAccountNumber("Your account number is ...");
+        registerResponse.setAccountNumber("Your account number is " + users.getAccountNumber());
         return registerResponse;
     }
 
