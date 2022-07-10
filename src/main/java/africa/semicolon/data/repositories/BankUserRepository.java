@@ -9,10 +9,6 @@ import java.util.Optional;
 @Repository
 public interface BankUserRepository extends MongoRepository<BankUser, String> {
 
-    Optional<BankUser> findByEmail(String email);
-
     boolean existsByEmail(String email);
-//    BankUsers findByEmail(String email);
-
-//    boolean existsByEmail(String email);
+    Optional<BankUser> findByAccountNumber(String accountNumber);
 }

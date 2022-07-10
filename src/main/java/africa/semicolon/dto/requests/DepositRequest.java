@@ -1,8 +1,5 @@
 package africa.semicolon.dto.requests;
-
-
 import lombok.*;
-
 
 @AllArgsConstructor
 @NoArgsConstructor
