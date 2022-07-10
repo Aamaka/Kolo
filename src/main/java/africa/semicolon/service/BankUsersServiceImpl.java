@@ -98,11 +98,13 @@ public class BankUsersServiceImpl implements BankUsersService{
             if (user.get().getPassword().equals(request.getPassword())){
                 if (request.getAmount() > 0 && request.getAmount() <= user.get().getBalance()){
                     user.get().setBalance(user.get().getBalance() - request.getAmount());
-                }else {
+                }
+                else {
                     throw new InvalidAmountException("invalid amount");
                 }
 
-            }else {
+            }
+            else {
                 throw new InvalidDetailsException("invalid details");
             }
             WithdrawResponse response = new WithdrawResponse();
