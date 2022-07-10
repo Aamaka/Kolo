@@ -29,7 +29,9 @@ public class BankUsersServiceImpl implements BankUsersService{
 
         String accountNumber = String.valueOf(UUID.randomUUID().getMostSignificantBits());
         accountNumber = accountNumber.substring(1, 10);
+
         users.setAccountNumber(accountNumber);
+
         BankUser saved = bankUserRepository.save(users);
 
         RegisterResponse registerResponse = new RegisterResponse();
