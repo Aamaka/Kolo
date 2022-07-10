@@ -42,8 +42,6 @@ public class BankUsersServiceImpl implements BankUsersService{
 
         registerResponse.setMessage(saved.getFirstName()+
                 "'s Registration Successful !!!");
-
-
         registerResponse.setAccountNumber("Your account number is " + saved.getAccountNumber());
         return registerResponse;
     }
@@ -58,7 +56,6 @@ public class BankUsersServiceImpl implements BankUsersService{
                             +" "+"your balance is " + user.get().getBalance());
                     return response;
                 }
-
             }
         throw  new AccountException("Account does not exist");
     }
@@ -102,14 +99,15 @@ public class BankUsersServiceImpl implements BankUsersService{
                 else {
                     throw new InvalidAmountException("invalid amount");
                 }
-
             }
             else {
                 throw new InvalidDetailsException("invalid details");
             }
+
             WithdrawResponse response = new WithdrawResponse();
             response.setMessage("Txn : Debit" + "\n" + "amount : "+ request.getAmount());
             response.setAccountBalance(user.get().getBalance());
+            bankUserRepository.save(user.get());
             return response;
         }
 
