@@ -8,14 +8,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.math.BigInteger;
 import java.time.LocalDateTime;
 
 @Data
 @RequiredArgsConstructor
 @NoArgsConstructor
 @Document("Bank")
-public class BankUsers {
+public class BankUser {
 
     @NonNull
     private String firstName;

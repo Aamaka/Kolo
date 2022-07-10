@@ -11,5 +11,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class DepositResponse {
     private String message;
-    private LocalDateTime date = LocalDateTime.now();
+//    private LocalDateTime date = LocalDateTime.now();
+    private int balance;
 }

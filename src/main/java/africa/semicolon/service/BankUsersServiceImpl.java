@@ -1,14 +1,12 @@
 package africa.semicolon.service;
 
-import africa.semicolon.data.models.BankUsers;
+import africa.semicolon.data.models.BankUser;
 import africa.semicolon.data.repositories.BankUserRepository;
 import africa.semicolon.dto.requests.*;
 import africa.semicolon.dto.responses.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 @Service
@@ -19,7 +17,7 @@ public class BankUsersServiceImpl implements BankUsersService{
 
     @Override
     public RegisterResponse register(RegisterRequest request) {
-        BankUsers users = new BankUsers();
+        BankUser users = new BankUser();
         users.setFirstName(request.getFirstName());
         users.setLastName(request.getLastName());
         users.setEmail(request.getEmail());
@@ -28,7 +26,7 @@ public class BankUsersServiceImpl implements BankUsersService{
         users.setOccupation(request.getOccupation());
         users.setPassword(request.getPassword());
 
-        BankUsers saved = bankUserRepository.save(users);
+        BankUser saved = bankUserRepository.save(users);
 
         RegisterResponse registerResponse = new RegisterResponse();
 
@@ -40,7 +38,7 @@ public class BankUsersServiceImpl implements BankUsersService{
 
     @Override
     public LoginResponse login(LoginRequest request) {
-        Optional<BankUsers> user = bankUserRepository.findByEmail(request.getEmail());
+        Optional<BankUser> user = bankUserRepository.findByEmail(request.getEmail());
             if(user.isPresent()) {
                 if (user.get().getPassword().equals(request.getPassword())) {
                     LoginResponse response = new LoginResponse();
@@ -54,22 +52,24 @@ public class BankUsersServiceImpl implements BankUsersService{
 
     @Override
     public DepositResponse deposit(DepositRequest request) {
-        Optional<BankUsers> users = bankUserRepository.findByEmail(request.getEmail());
+        Optional<BankUser> users = bankUserRepository.findByEmail(request.getEmail());
         if(users.isPresent()){
             DepositResponse response = new DepositResponse();
             if(request.getAmount() > 0){
-
                 users.get().setBalance(users.get().getBalance() + request.getAmount());
 
-                response.setMessage( request.getAmount()+" was deposited to your account \n your balance is "+
+                response.setMessage(users.get().getFirstName() + " "+ request.getAmount()+" was deposited to your account,  your balance is "+
                         users.get().getBalance());
-                response.setDate(LocalDateTime.parse(DateTimeFormatter.ofPattern("EEEE, dd/MM/ yyyy,  hh:mm, a").
-                        format(users.get().getTime())));
-            }else {
-                response.setMessage("amount should be greater than zero");
-            }
-            return response;
+//                response.setDate(LocalDateTime.parse(DateTimeFormatter.ofPattern("EEEE, dd/MM/ yyyy,  hh:mm, a").
+//                        format(users.get().getTime())));
 
+                response.setBalance(users.get().getBalance() + response.getBalance());
+                bankUserRepository.save(users.get());
+
+                return response;
+            }else {
+                throw new IllegalArgumentException("Invalid amount");
+            }
 
         }
         throw new IllegalArgumentException("email does not exist");
