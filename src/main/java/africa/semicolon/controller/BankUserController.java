@@ -1,12 +1,6 @@
 package africa.semicolon.controller;
-import africa.semicolon.dto.requests.DepositRequest;
-import africa.semicolon.dto.requests.LoginRequest;
-import africa.semicolon.dto.requests.RegisterRequest;
-import africa.semicolon.dto.requests.WithdrawRequest;
-import africa.semicolon.dto.responses.DepositResponse;
-import africa.semicolon.dto.responses.LoginResponse;
-import africa.semicolon.dto.responses.RegisterResponse;
-import africa.semicolon.dto.responses.WithdrawResponse;
+import africa.semicolon.dto.requests.*;
+import africa.semicolon.dto.responses.*;
 import africa.semicolon.service.BankUsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -37,5 +31,10 @@ public class BankUserController {
     @PostMapping("/user/withdraw")
     public WithdrawResponse withdraw(@RequestBody WithdrawRequest request){
         return usersService.withdraw(request);
+    }
+
+    @PostMapping("/user/balance")
+    public CheckBalanceResponse checkBalance(@RequestBody CheckBalanceRequest request){
+        return usersService.checkBalance(request);
     }
 }
