@@ -105,7 +105,7 @@ public class BankUsersServiceImpl implements BankUsersService{
             }
 
             WithdrawResponse response = new WithdrawResponse();
-            response.setMessage("Txn : Debit" + "\n" + "amount : "+ request.getAmount());
+            response.setMessage("Txn : Debit" + "," + "amount : "+ request.getAmount());
             response.setAccountBalance(user.get().getBalance());
             bankUserRepository.save(user.get());
             return response;
@@ -116,6 +116,7 @@ public class BankUsersServiceImpl implements BankUsersService{
 
     @Override
     public CheckBalanceResponse checkBalance(CheckBalanceRequest request) {
+
         return null;
     }
 
