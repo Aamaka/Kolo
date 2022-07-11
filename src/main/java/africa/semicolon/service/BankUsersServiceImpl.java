@@ -116,6 +116,12 @@ public class BankUsersServiceImpl implements BankUsersService{
 
     @Override
     public CheckBalanceResponse checkBalance(CheckBalanceRequest request) {
+        Optional<BankUser> user = bankUserRepository.findByAccountNumber(request.getAccountNumber());
+        if(user.isPresent()){
+            if (user.get().getPassword().equals(request.getPassword())){
+                CheckBalanceResponse response = new CheckBalanceResponse();
+            }
+        }
 
         return null;
     }
