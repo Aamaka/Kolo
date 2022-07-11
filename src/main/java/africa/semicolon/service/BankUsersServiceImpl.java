@@ -85,20 +85,36 @@ public class BankUsersServiceImpl implements BankUsersService{
 
     @Override
     public TransferResponse transfer(TransferRequest request) {
-        Optional<BankUser> users = bankUserRepository.findByAccountNumber(request.getSenderAccount());
-        if (users.isPresent()){
-            if(users.get().getPassword().equals(request.getPassword())){
-                Optional<BankUser> user = bankUserRepository.findByAccountNumber(request.getReceiverAccount());
-                if (user.isPresent()){
-                    if (request.getAmount() > 0 && request.getAmount() < users.get().getBalance()){
-                        users.get().setBalance(users.get().getBalance() - request.getAmount());
-                        user.get().setBalance(user.get().getBalance() + request.getAmount());
+        Optional<BankUser> sender = bankUserRepository.findByAccountNumber(request.getSenderAccount());
+        if (sender.isPresent()){
+            if(sender.get().getPassword().equals(request.getPassword())){
+                Optional<BankUser> receiver = bankUserRepository.findByAccountNumber(request.getReceiverAccount());
+                if (receiver.isPresent()){
+                    if (request.getAmount() > 0 && request.getAmount() <= sender.get().getBalance()){
+                        sender.get().setBalance(sender.get().getBalance() - request.getAmount());
+                        receiver.get().setBalance(receiver.get().getBalance() + request.getAmount());
+                        TransferResponse response = new TransferResponse();
+                        response.setMessage(sender.get().getFirstName().toUpperCase() + "you have successfully transferred "+
+                                request.getAmount() + " to " + receiver.get().getFirstName().toUpperCase() +
+                                ". your balance is : " + sender.get().getBalance());
+                        return response;
                     }
+                    else {
+                        throw new InvalidAmountException("Amount must be greater than Zero(0)");
+                    }
+
                 }
+                else {
+                    throw new AccountException("Receiver account does not exist");
+                }
+
+            }
+            else {
+                throw new InvalidDetailsException("invalid detail");
             }
 
         }
-        return null;
+        throw new AccountException("Account does not exist");
     }
 
 
