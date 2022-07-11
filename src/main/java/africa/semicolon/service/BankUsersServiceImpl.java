@@ -120,11 +120,13 @@ public class BankUsersServiceImpl implements BankUsersService{
         if(user.isPresent()){
             if (user.get().getPassword().equals(request.getPassword())){
                 CheckBalanceResponse response = new CheckBalanceResponse();
+                response.setMessage(user.get().getFirstName().toUpperCase() +" your account balance is: "+ user.get().getBalance());
+                return response;
             }
+            else throw new InvalidDetailsException("invalid details");
         }
 
-        return null;
+        throw new AccountException("Account does not exist");
     }
-
 
 }
