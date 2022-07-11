@@ -94,9 +94,9 @@ public class BankUsersServiceImpl implements BankUsersService{
                         sender.get().setBalance(sender.get().getBalance() - request.getAmount());
                         receiver.get().setBalance(receiver.get().getBalance() + request.getAmount());
                         TransferResponse response = new TransferResponse();
-                        response.setMessage(sender.get().getFirstName().toUpperCase() + " you have successfully transferred "+
+                        response.setMessage(sender.get().getFirstName().toUpperCase() + " you have successfully transferred $"+
                                 request.getAmount() + " to " + receiver.get().getFirstName().toUpperCase() +
-                                ". your balance is : " + sender.get().getBalance());
+                                ". your balance is : $" + sender.get().getBalance());
                         bankUserRepository.save(sender.get());
                         bankUserRepository.save(receiver.get());
                         return response;
@@ -138,7 +138,7 @@ public class BankUsersServiceImpl implements BankUsersService{
             }
 
             WithdrawResponse response = new WithdrawResponse();
-            response.setMessage("Txn : Debit" + "," + "amount : "+ request.getAmount());
+            response.setMessage("Txn : Debit" + "," + "amount : $"+ request.getAmount());
             response.setAccountBalance(user.get().getBalance());
             bankUserRepository.save(user.get());
             return response;
@@ -153,7 +153,7 @@ public class BankUsersServiceImpl implements BankUsersService{
         if(user.isPresent()){
             if (user.get().getPassword().equals(request.getPassword())){
                 CheckBalanceResponse response = new CheckBalanceResponse();
-                response.setMessage(user.get().getFirstName().toUpperCase() +" your account balance is: "+ user.get().getBalance());
+                response.setMessage(user.get().getFirstName().toUpperCase() +" your account balance is: $"+ user.get().getBalance());
                 return response;
             }
             else throw new InvalidDetailsException("invalid details");
