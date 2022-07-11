@@ -94,9 +94,11 @@ public class BankUsersServiceImpl implements BankUsersService{
                         sender.get().setBalance(sender.get().getBalance() - request.getAmount());
                         receiver.get().setBalance(receiver.get().getBalance() + request.getAmount());
                         TransferResponse response = new TransferResponse();
-                        response.setMessage(sender.get().getFirstName().toUpperCase() + "you have successfully transferred "+
+                        response.setMessage(sender.get().getFirstName().toUpperCase() + " you have successfully transferred "+
                                 request.getAmount() + " to " + receiver.get().getFirstName().toUpperCase() +
                                 ". your balance is : " + sender.get().getBalance());
+                        bankUserRepository.save(sender.get());
+                        bankUserRepository.save(receiver.get());
                         return response;
                     }
                     else {
