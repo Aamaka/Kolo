@@ -1,5 +1,6 @@
 package africa.semicolon.service;
 
+import africa.semicolon.data.Mapper;
 import africa.semicolon.data.models.BankUser;
 import africa.semicolon.data.repositories.BankUserRepository;
 import africa.semicolon.dto.requests.*;
@@ -23,26 +24,19 @@ public class BankUsersServiceImpl implements BankUsersService{
     public RegisterResponse register(RegisterRequest request) {
         if(bankUserRepository.existsByEmail(request.getEmail()))throw new AccountException("Account already exist");
         BankUser users = new BankUser();
-        users.setFirstName(request.getFirstName());
-        users.setLastName(request.getLastName());
-        users.setEmail(request.getEmail());
-        users.setAddress(request.getAddress());
-        users.setPhoneNumber(request.getPhoneNumber());
-        users.setOccupation(request.getOccupation());
-        users.setPassword(request.getPassword());
+        Mapper.map(request, users);
 
         String accountNumber = String.valueOf(UUID.randomUUID().getMostSignificantBits());
         accountNumber = accountNumber.substring(1, 11);
 
         users.setAccountNumber(accountNumber);
 
+
         BankUser saved = bankUserRepository.save(users);
 
         RegisterResponse registerResponse = new RegisterResponse();
+        Mapper.map(saved, registerResponse);
 
-        registerResponse.setMessage(saved.getFirstName()+
-                "'s Registration Successful !!!");
-        registerResponse.setAccountNumber("Your account number is " + saved.getAccountNumber());
         return registerResponse;
     }
 
